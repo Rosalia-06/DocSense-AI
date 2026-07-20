@@ -1,5 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel
+from pydantic import BaseModel
 
 
 class DocumentResponse(BaseModel):
@@ -14,6 +15,18 @@ class DocumentResponse(BaseModel):
     class Config:
         from_attributes = True
 
-
 class DeleteResponse(BaseModel):
     message: str
+
+class AskQuestion(BaseModel):
+    question: str
+
+class Citation(BaseModel):
+    document_id: int
+    document_name: str
+    chunk_index: int
+    snippet: str
+
+class AIResponse(BaseModel):
+    answer: str
+    citations: list[Citation] = []

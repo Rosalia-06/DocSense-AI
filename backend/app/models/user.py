@@ -28,6 +28,8 @@ class User(Base):
         nullable=False
     )
 
+    role = Column(String, default="user", nullable=False)
+
     documents = relationship(
         "Document",
         back_populates="owner",

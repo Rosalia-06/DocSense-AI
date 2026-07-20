@@ -3,11 +3,16 @@ from fastapi import FastAPI
 from app.routes.auth import router as auth_router
 from app.routes.document import router as document_router
 
-from app.database.database import Base, engine
+from app.database.database import Base
 import app.models
 from app.routes.download import router as download_router
 
-Base.metadata.create_all(bind=engine)
+from app.routes.admin import router as admin_router
+from app.core.limiter import limiter
+from app.core.logging_config import setup_logging
+from slowapi.errors import RateLimitExceeded
+from slowapi import _rate_limit_exceeded_handler
+
 
 app = FastAPI(
     title="DocSense AI",
@@ -15,9 +20,15 @@ app = FastAPI(
     version="1.0.0"
 )
 
+setup_logging()
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
 app.include_router(auth_router)
 app.include_router(document_router)
-
+app.include_router(download_router)
+app.include_router(admin_router)
 
 @app.get("/")
 def root():
