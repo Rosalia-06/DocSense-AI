@@ -7,6 +7,10 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int
     GROQ_API_KEY: str = ""
 
+    BREVO_API_KEY: str = ""
+    SENDER_EMAIL: str = ""
+    BACKEND_BASE_URL: str = "http://localhost:8000"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore"
