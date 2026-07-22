@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Boolean
 from app.database.database import Base
 from sqlalchemy.orm import relationship
 
@@ -29,6 +29,8 @@ class User(Base):
     )
 
     role = Column(String, default="user", nullable=False)
+
+    is_verified = Column(Boolean, default=False, nullable=False)
 
     documents = relationship(
         "Document",
