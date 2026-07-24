@@ -19,21 +19,27 @@ export default function AuthPage() {
     setError("");
     setLoading(true);
     try {
-      const payload =
-        mode === "login"
-          ? { email: form.email, password: form.password }
-          : form;
-      const authFn = mode === "login" ? loginUser : registerUser;
-      const data = await authFn(payload);
-      const token = data.access_token || data.token;
-      localStorage.setItem("docsense_token", token);
-      const userData = await getCurrentUser();
-      login(token, userData);
-      navigate("/dashboard");
+      if (mode === "register") {
+        await registerUser({
+          name: form.full_name,
+          email: form.email,
+          password: form.password,
+        });
+        setMode("login");
+        setError("Account created! Please check your email to verify before signing in.");
+      } else {
+        const data = await loginUser({ email: form.email, password: form.password });
+        const token = data.access_token;
+        localStorage.setItem("docsense_token", token);
+        const userData = await getCurrentUser();
+        login(token, userData);
+        navigate("/dashboard");
+      }
     } catch (err) {
       const status = err.response?.status;
       if (status === 429) setError("Too many attempts. Slow down and try again shortly.");
       else if (status === 401) setError("Invalid email or password.");
+      else if (status === 403) setError(err.response?.data?.detail || "Please verify your email before logging in.");
       else if (status === 400) setError(err.response?.data?.detail || "That email is already registered.");
       else setError("Something went wrong. Please try again.");
     } finally {

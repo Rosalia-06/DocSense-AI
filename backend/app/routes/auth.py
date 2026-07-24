@@ -11,18 +11,58 @@ from app.core.security import (
 )
 from app.database.database import get_db
 from app.models.user import User
-from app.schemas.user import UserRegister, UserResponse, ChangePasswordRequest
+from app.schemas.user import UserRegister, UserResponse, ChangePasswordRequest, ResendVerificationRequest
 from app.auth.dependencies import get_current_user
 from app.core.config import settings
 from app.utils.email import send_verification_email
+from app.core.limiter import limiter
+from fastapi import Request
 
 router = APIRouter(
     prefix="/auth",
     tags=["Authentication"]
 )
 
+@router.post("/register", response_model=UserResponse)
+@limiter.limit("5/minute")
+def register(
+    request: Request,
+    user: UserRegister,
+    db: Session = Depends(get_db)
+):
+    existing_user = db.query(User).filter(
+        User.email == user.email
+    ).first()
+
+    if existing_user:
+        raise HTTPException(
+            status_code=400,
+            detail="Email already registered"
+        )
+
+    hashed_password = hash_password(user.password)
+
+    new_user = User(
+        name=user.name,
+        email=user.email,
+        password=hashed_password
+    )
+
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+
+    token = create_verification_token(new_user.id)
+    base_url = settings.BACKEND_BASE_URL.rstrip("/")
+    verify_link = f"{base_url}/auth/verify-email?token={token}"
+    send_verification_email(new_user.email, verify_link)
+
+    return new_user
+
 @router.post("/login", response_model=Token)
+@limiter.limit("10/minute")
 def login(
+    request: Request,
     user: UserLogin,
     db: Session = Depends(get_db)
 ):
@@ -63,42 +103,6 @@ def login(
         "token_type": "bearer"
     }
 
-
-@router.post("/register", response_model=UserResponse)
-def register(
-    user: UserRegister,
-    db: Session = Depends(get_db)
-):
-
-    existing_user = db.query(User).filter(
-        User.email == user.email
-    ).first()
-
-    if existing_user:
-        raise HTTPException(
-            status_code=400,
-            detail="Email already registered"
-        )
-
-    hashed_password = hash_password(user.password)
-
-    new_user = User(
-        name=user.name,
-        email=user.email,
-        password=hashed_password
-    )
-
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-
-    token = create_verification_token(new_user.id)
-    verify_link = f"{settings.BACKEND_BASE_URL}/auth/verify-email?token={token}"
-    send_verification_email(new_user.email, verify_link)
-
-    return new_user
-
-
 @router.get("/verify-email")
 def verify_email(token: str, db: Session = Depends(get_db)):
     user_id = verify_verification_token(token)
@@ -125,6 +129,26 @@ def verify_email(token: str, db: Session = Depends(get_db)):
 
     return {"message": "Email verified successfully"}
 
+@router.post("/resend-verification")
+@limiter.limit("5/minute")
+def resend_verification(
+    request: Request,
+    payload: ResendVerificationRequest,
+    db: Session = Depends(get_db)
+):
+    db_user = db.query(User).filter(User.email == payload.email).first()
+
+    if not db_user:
+        raise HTTPException(status_code=404, detail="No account found with this email")
+
+    if db_user.is_verified:
+        return {"message": "Email already verified"}
+
+    token = create_verification_token(db_user.id)
+    verify_link = f"{settings.BACKEND_BASE_URL}/auth/verify-email?token={token}"
+    send_verification_email(db_user.email, verify_link)
+
+    return {"message": "Verification email resent"}
 
 @router.post("/change-password")
 def change_password(
