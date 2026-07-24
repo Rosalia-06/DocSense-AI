@@ -1,3 +1,12 @@
+---
+title: DocSense AI Backend
+sdk: docker
+app_port: 7860
+---
+
+# DocSense AI Backend
+
+
 # 🚀 DocSense AI
 
 > Enterprise Document Intelligence Platform powered by AI.
