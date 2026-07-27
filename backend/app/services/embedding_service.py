@@ -1,12 +1,14 @@
+from pathlib import Path
 from sentence_transformers import SentenceTransformer
 
 _model = None
+_MODEL_PATH = Path(__file__).resolve().parent.parent / "models" / "docvqa-finetuned-minilm"
 
 
 def get_model():
     global _model
     if _model is None:
-        _model = SentenceTransformer("all-MiniLM-L6-v2")
+        _model = SentenceTransformer(str(_MODEL_PATH))
     return _model
 
 
