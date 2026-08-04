@@ -59,16 +59,17 @@ The retrieval component (`all-MiniLM-L6-v2` sentence embeddings) was fine-tuned 
 
 | Metric | Baseline (`all-MiniLM-L6-v2`) | Fine-tuned |
 |---|---|---|
-| Recall@1 | `[FILL IN: baseline_recall1 from Colab output]` | `[FILL IN: finetuned_recall1 from Colab output]` |
+| Recall@1 | `3.62%` | `8.50%` |
 
 *(See `training/docvqa_finetune_colab.py` for the full fine-tuning + evaluation script.)*
 
 ## System Architecture
 
 ```
-[FILL IN: paste or describe your architecture diagram here — e.g.
-User → React Frontend → FastAPI Backend → {Auth (JWT), OCR (PaddleOCR),
-Embedding Service (fine-tuned MiniLM) → pgvector similarity search → Groq LLM (Llama 3.3 70B)} → PostgreSQL/Neon]
+User → React Frontend → FastAPI Backend →
+[Auth (JWT) → OCR (PaddleOCR / PyMuPDF) → Fine-tuned Embedding Model →
+pgvector Similarity Search (PostgreSQL / Neon) → Groq LLM (Llama 3.3 70B)]
+→ Grounded Answer with Citation
 ```
 
 ## Project Structure
