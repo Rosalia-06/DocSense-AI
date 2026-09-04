@@ -1,0 +1,41 @@
+2026-08-04 21:56:04,533 | INFO | Use pytorch device_name: cpu
+2026-08-04 21:56:04,536 | INFO | Load pretrained SentenceTransformer: C:\Users\hp\OneDrive\Desktop\DocSense AI\backend\app\models\docvqa-finetuned-minilm
+2026-08-04 21:56:04,564 | WARNING | You try to use a model that was created with version 5.6.0, however, your version is 3.3.1. This might cause unexpected behavior or errors. In that case, try to update to the latest version.
+
+
+
+2026-08-04 21:56:11,832 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-04 21:56:22,455 | INFO | Use pytorch device_name: cpu
+2026-08-04 21:56:22,455 | INFO | Load pretrained SentenceTransformer: C:\Users\hp\OneDrive\Desktop\DocSense AI\backend\app\models\docvqa-finetuned-minilm
+2026-08-04 21:56:22,479 | WARNING | You try to use a model that was created with version 5.6.0, however, your version is 3.3.1. This might cause unexpected behavior or errors. In that case, try to update to the latest version.
+
+
+
+2026-08-04 21:56:26,428 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-04 21:56:38,708 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-05 00:10:48,036 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-05 00:11:33,085 | INFO | Use pytorch device_name: cpu
+2026-08-05 00:11:33,085 | INFO | Load pretrained SentenceTransformer: C:\Users\hp\OneDrive\Desktop\DocSense AI\backend\app\models\docvqa-finetuned-minilm
+2026-08-05 00:11:33,088 | WARNING | You try to use a model that was created with version 5.6.0, however, your version is 3.3.1. This might cause unexpected behavior or errors. In that case, try to update to the latest version.
+
+
+
+2026-08-05 00:14:33,301 | INFO | Use pytorch device_name: cpu
+2026-08-05 00:14:33,302 | INFO | Load pretrained SentenceTransformer: C:\Users\hp\OneDrive\Desktop\DocSense AI\backend\app\models\docvqa-finetuned-minilm
+2026-08-05 00:14:33,302 | WARNING | You try to use a model that was created with version 5.6.0, however, your version is 3.3.1. This might cause unexpected behavior or errors. In that case, try to update to the latest version.
+
+
+
+2026-08-05 00:34:24,397 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-09-04 18:05:05,574 | INFO | Use pytorch device_name: cpu
+2026-09-04 18:05:05,574 | INFO | Load pretrained SentenceTransformer: C:\Users\hp\OneDrive\Desktop\DocSense AI\backend\app\models\docvqa-finetuned-minilm
+2026-09-04 18:05:05,581 | WARNING | You try to use a model that was created with version 5.6.0, however, your version is 3.3.1. This might cause unexpected behavior or errors. In that case, try to update to the latest version.
+
+
+
+2026-09-04 18:14:11,169 | INFO | No device provided, using cpu
+2026-09-04 18:14:11,170 | INFO | Loading SentenceTransformer model from C:\Users\hp\OneDrive\Desktop\DocSense AI\backend\app\models\docvqa-finetuned-minilm.
+2026-09-04 18:15:30,580 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 404 Not Found"
+2026-09-04 18:18:43,489 | INFO | No device provided, using cpu
+2026-09-04 18:18:43,490 | INFO | Loading SentenceTransformer model from C:\Users\hp\OneDrive\Desktop\DocSense AI\backend\app\models\docvqa-finetuned-minilm.
+2026-09-04 18:18:45,660 | INFO | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"

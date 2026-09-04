@@ -8,7 +8,7 @@ client = Groq(
 
 def ask_llm(prompt: str):
     response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="openai/gpt-oss-120b",
         messages=[
             {
                 "role": "user",
@@ -21,7 +21,7 @@ def ask_llm(prompt: str):
 
 def ask_llm_stream(prompt: str):
     stream = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="openai/gpt-oss-120b",
         messages=[
             {
                 "role": "user",
