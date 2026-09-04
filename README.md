@@ -42,7 +42,7 @@ Rule-based keyword search cannot handle paraphrased questions, cross-references,
 | Auth | JWT | Stateless, standard for API-based auth |
 | OCR | PaddleOCR, PyMuPDF, pdf2image, python-pptx | Handles both digital and scanned documents; PaddleOCR gives strong accuracy on printed/scanned text without paid APIs |
 | Embeddings | sentence-transformers (`all-MiniLM-L6-v2`), **fine-tuned on a DocVQA subset** | Small (22M params), fast enough for CPU inference, fine-tuned specifically for document-question retrieval rather than generic semantic similarity |
-| LLM | Groq API — Llama 3.3 70B (`llama-3.3-70b-versatile`) | Fast inference, free tier, required by course guidelines as the only LLM used |
+| LLM | Groq API — GPT-OSS 120B (openai/gpt-oss-120b) | Fast inference, free tier, required by course guidelines as the only LLM used |
 | Frontend | React + Tailwind CSS | Component-based UI, fast styling iteration |
 | Deployment | Docker + docker-compose | Reproducible environment; matches production-style setup |
 
@@ -68,7 +68,7 @@ The retrieval component (`all-MiniLM-L6-v2` sentence embeddings) was fine-tuned 
 ```
 User → React Frontend → FastAPI Backend →
 [Auth (JWT) → OCR (PaddleOCR / PyMuPDF) → Fine-tuned Embedding Model →
-pgvector Similarity Search (PostgreSQL / Neon) → Groq LLM (Llama 3.3 70B)]
+pgvector Similarity Search (PostgreSQL / Neon) → Groq LLM (GPT-OSS 120B)]
 → Grounded Answer with Citation
 ```
 
